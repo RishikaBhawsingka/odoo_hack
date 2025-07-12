@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Browse Skills | SwapHub</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(to right, #fdfbfb, #ebedee);
+    }
+
+    /* Navbar */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #fff;
+      padding: 1rem 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-group img {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+    }
+
+    .logo-text {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #4f46e5;
+    }
+
+    nav a {
+      margin-left: 1.2rem;
+      text-decoration: none;
+      color: #4f46e5;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: #1e40af;
+    }
+
+    /* Main Section */
+    main {
+      text-align: center;
+      padding: 80px 20px 40px;
+    }
+
+    .hero h2 {
+      font-size: 2.5rem;
+      color: #4f46e5;
+      margin-bottom: 1.5rem;
+      animation: fadeIn 1s ease;
+    }
+
+    .search-bar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      max-width: 600px;
+      margin: 0 auto 40px;
+    }
+
+    .search-bar input {
+      flex: 1;
+      padding: 0.9rem 1rem;
+      border-radius: 50px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .search-bar input:focus {
+      outline: none;
+      border-color: #4f46e5;
+      box-shadow: 0 0 8px rgba(79, 70, 229, 0.2);
+    }
+
+    .search-bar button {
+      padding: 0.9rem 1.8rem;
+      border-radius: 50px;
+      background: linear-gradient(to right, #4f46e5, #6d28d9);
+      color: white;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .search-bar button:hover {
+      transform: scale(1.05);
+    }
+
+    .card-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      padding: 0 2rem;
+    }
+
+    .card {
+      background-color: #fff;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s ease;
+      text-align: center;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+    }
+
+    .card h3 {
+      color: #4f46e5;
+      margin-bottom: 0.5rem;
+    }
+
+    .card p {
+      color: #333;
+      font-size: 0.95rem;
+      margin: 0.3rem 0;
+    }
+
+    .card button {
+      margin-top: 1rem;
+      background-color: #4f46e5;
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .card button:hover {
+      background-color: #3730a3;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <header>
+    <div class="logo-group">
+      <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Logo" />
+      <span class="logo-text">SwapHub</span>
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="browse.html">Browse</a>
+      <a href="auth.html">Login</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="myprofile.html">My Profile</a>
+    </nav>
+  </header>
+
+  <!-- Main -->
+  <main>
+    <section class="hero">
+      <h2>Find the Right Skill Partner</h2>
+      <form id="searchForm" class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search skills like Photoshop, Excel..." />
+        <button type="button">Search</button>
+      </form>
+    </section>
+
+    <section id="results" class="card-container">
+      <!-- Default sample users -->
+      <div class="card">
+        <h3>Arjun Mehra</h3>
+        <p><strong>Offers:</strong> Python, Django</p>
+        <p><strong>Wants:</strong> UI Design</p>
+        <p><strong>Availability:</strong> Weekends</p>
+        <button onclick="requestSwap('Arjun Mehra')">Request Swap</button>
+      </div>
+      <div class="card">
+        <h3>Meera Kapoor</h3>
+        <p><strong>Offers:</strong> Photoshop, Illustrator</p>
+        <p><strong>Wants:</strong> React.js</p>
+        <p><strong>Availability:</strong> Evenings</p>
+        <button onclick="requestSwap('Meera Kapoor')">Request Swap</button>
+      </div>
+      <div class="card">
+        <h3>Karan Patel</h3>
+        <p><strong>Offers:</strong> Content Writing</p>
+        <p><strong>Wants:</strong> Digital Marketing</p>
+        <p><strong>Availability:</strong> Mornings</p>
+        <button onclick="requestSwap('Karan Patel')">Request Swap</button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    document.querySelector(".search-bar button").addEventListener("click", async () => {
+      const input = document.getElementById("searchInput").value.trim();
+      if (!input) return;
+
+      const res = await fetch(`http://localhost:5000/api/users/search?skill=${input}`);
+      const users = await res.json();
+
+      const container = document.getElementById("results");
+      container.innerHTML = "";
+      users.forEach((user) => {
+        const div = document.createElement("div");
+        div.className = "card";
+        div.innerHTML = `
+          <h3>${user.name}</h3>
+          <p><strong>Offers:</strong> ${user.skillsOffered.join(", ")}</p>
+          <p><strong>Wants:</strong> ${user.skillsWanted.join(", ")}</p>
+          <p><strong>Availability:</strong> ${user.availability}</p>
+          <button onclick="requestSwap('${user.name}')">Request Swap</button>
+        `;
+        container.appendChild(div);
+      });
+    });
+
+    function requestSwap(name) {
+      const user = localStorage.getItem("loggedInUser");
+      if (!user) {
+        alert("Please login to request a swap.");
+        return;
+      }
+      alert(`Swap request sent to ${name}!`);
+    }
+  </script>
+</body>
+</html>
