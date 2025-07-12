@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SwapHub | Skill Swap Platform</title>
+  <link href="frontend/styles/style.css" rel="stylesheet" />
+  <style>
+    body {
+      background: linear-gradient(to bottom right, #eef2ff, #ffffff);
+      font-family: 'Segoe UI', sans-serif;
+      color: #333;
+    }
+
+    header {
+      background-color: #f3c7de;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-group {
+      display: flex;
+      align-items: center;
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: #5b21b6;
+    }
+
+    nav a {
+      margin-left: 1.5rem;
+      text-decoration: none;
+      color: #4f46e5;
+      font-weight: 500;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 4rem 2rem 2rem;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      color: #4f46e5;
+      margin-bottom: 0.5rem;
+    }
+
+    .search-section {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 2rem auto;
+    }
+
+    .search-section input {
+      padding: 0.75rem 1.25rem;
+      border-radius: 999px;
+      border: 1px solid #ccc;
+      width: 300px;
+    }
+
+    .search-section button {
+      padding: 0.75rem 1.5rem;
+      background: #5b21b6;
+      border: none;
+      border-radius: 999px;
+      color: white;
+      cursor: pointer;
+    }
+
+    .cards-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      padding: 2rem;
+    }
+
+    .card {
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 1rem;
+    }
+
+    .card h3 {
+      color: #4f46e5;
+    }
+
+    .card button {
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      background-color: #4f46e5;
+      color: #fff;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo-group">SwapHub</div>
+    <nav>
+      <a href="browse.html">Browse Skills</a>
+      <a href="auth.html">Login</a>
+      <a href="auth.html">Register</a>
+      <a href="dashboard.html">Swap Infogit init
+</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Swap Skills. Grow Together.</h1>
+    <p>Connect with people, offer your skills, and get help in return. It's skill-sharing made simple.</p>
+  </section>
+
+  <section class="search-section">
+    <input type="text" placeholder="e.g. Photoshop, Guitar, Java..." />
+    <button>Search</button>
+  </section>
+
+  <h2 style="text-align: center; color: #4f46e5;">Recently Active Users</h2>
+  <section class="cards-container" id="userCards">
+    <!-- User cards added by JS -->
+  </section>
+
+  <script>
+    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+    const dashboardUsers = JSON.parse(localStorage.getItem("dashboardUsers")) || [];
+
+    const users = [
+      {
+        name: "Ria Sharma",
+        location: "Mumbai",
+        offers: "Photoshop, Graphic Design",
+        wants: "Excel, Python Basics",
+        availability: "Weekends",
+        image: "https://randomuser.me/api/portraits/women/1.jpg"
+      },
+      {
+        name: "Aditya Mehta",
+        location: "Delhi",
+        offers: "Web Development",
+        wants: "Video Editing",
+        availability: "Evenings",
+        image: "https://randomuser.me/api/portraits/men/2.jpg"
+      },
+      {
+        name: "Karan Patel",
+        location: "Pune",
+        offers: "Java, C++",
+        wants: "UI/UX Design",
+        availability: "Weekdays",
+        image: "https://randomuser.me/api/portraits/men/3.jpg"
+      },
+      // Repeat or loop to simulate 60 profiles...
+    ];
+
+    const container = document.getElementById("userCards");
+
+    users.forEach(user => {
+      const div = document.createElement("div");
+      div.className = "card";
+      div.innerHTML = `
+        <img src="${user.image}" alt="${user.name}" />
+        <h3>${user.name}</h3>
+        <p><strong>Location:</strong> ${user.location}</p>
+        <p><strong>Offers:</strong> ${user.offers}</p>
+        <p><strong>Wants:</strong> ${user.wants}</p>
+        <p><strong>Availability:</strong> ${user.availability}</p>
+        <button onclick='requestSwap(${JSON.stringify(user)})'>Request Swap</button>
+      `;
+      container.appendChild(div);
+    });
+
+    function requestSwap(userObj) {
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+  if (!isLoggedIn) {
+    alert("Please login to request a swap.");
+    window.location.href = "auth.html"; // or "login.html" if that's your file
+    return;
+  }
+
+  let dashboardUsers = JSON.parse(localStorage.getItem("dashboardUsers")) || [];
+
+  const exists = dashboardUsers.find(u => u.name === userObj.name);
+  if (!exists) {
+    dashboardUsers.push(userObj);
+    localStorage.setItem("dashboardUsers", JSON.stringify(dashboardUsers));
+  }
+
+  window.location.href = "dashboard.html";
+}
+  </script>
+</body>
+</html>
