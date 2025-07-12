@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Complete Your Profile | SwapHub</title>
+  <link rel="stylesheet" href="frontend/styles/style.css" />
+  <style>
+    body {
+      background: linear-gradient(to bottom right, #eef2ff, #ffffff);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #f3c7dd;
+      padding: 1rem 2rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    header .logo {
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: #6b21a8;
+    }
+
+    header nav a {
+      margin-left: 20px;
+      text-decoration: none;
+      color: #4f46e5;
+      font-weight: 600;
+    }
+
+    header nav a:hover {
+      color: #3730a3;
+    }
+
+    .profile-container {
+      max-width: 600px;
+      margin: 60px auto;
+      background: white;
+      padding: 2.5rem;
+      border-radius: 20px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.05);
+      animation: fadeIn 0.6s ease-in-out;
+    }
+
+    .profile-container h2 {
+      text-align: center;
+      color: #4f46e5;
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #333;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="file"],
+    select {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1.2rem;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: #4f46e5;
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+      outline: none;
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .radio-group label {
+      font-weight: normal;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.9rem;
+      background-color: #4f46e5;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 30px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #3730a3;
+      transform: scale(1.03);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">SwapHub</div>
+    <nav>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="browse.html">Browse</a>
+      <a href="auth.html">Logout</a>
+    </nav>
+  </header>
+
+  <div class="profile-container">
+    <h2>Complete Your Profile</h2>
+    <form id="profileForm">
+      <label for="photo">Upload Profile Photo (optional)</label>
+      <input type="file" id="photo" accept="image/*" />
+
+      <label for="name">Full Name</label>
+      <input type="text" id="name" placeholder="Your name" required />
+
+      <label for="location">Location (optional)</label>
+      <input type="text" id="location" placeholder="City or Country" />
+
+      <label for="skillsOffer">Skills You Offer</label>
+      <input type="text" id="skillsOffer" placeholder="e.g. Photoshop, Guitar" required />
+
+      <label for="skillsWant">Skills You Want to Learn</label>
+      <input type="text" id="skillsWant" placeholder="e.g. Python, Singing" required />
+
+      <label for="availability">Availability</label>
+      <select id="availability">
+        <option>Weekends</option>
+        <option>Evenings</option>
+        <option>Weekdays</option>
+        <option>Flexible</option>
+      </select>
+
+      <label>Profile Visibility</label>
+      <div class="radio-group">
+        <label><input type="radio" name="visibility" value="public" checked /> Public</label>
+        <label><input type="radio" name="visibility" value="private" /> Private</label>
+      </div>
+
+      <button type="submit">Save Profile</button>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById("profileForm");
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const profile = {
+        name: form.name.value,
+        location: form.location.value,
+        skillsOffered: form.skillsOffer.value.split(",").map(s => s.trim()),
+        skillsWanted: form.skillsWant.value.split(",").map(s => s.trim()),
+        availability: form.availability.value,
+        visibility: form.visibility.value,
+        photo: form.photo.files[0] ? form.photo.files[0].name : null
+      };
+      localStorage.setItem("userProfile", JSON.stringify(profile));
+      alert("Profile saved successfully!");
+      window.location.href = "dashboard.html";
+    });
+  </script>
+</body>
+</html>
