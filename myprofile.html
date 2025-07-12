@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile | SwapHub</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #f8f9fa, #e8efff);
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #f3cce3;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #5b21b6;
+    }
+
+    nav a {
+      margin-left: 20px;
+      text-decoration: none;
+      color: #4f46e5;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      padding: 2rem;
+      animation: fadeIn 0.6s ease-in-out;
+    }
+
+    .container h2 {
+      text-align: center;
+      color: #4f46e5;
+    }
+
+    .profile-section {
+      display: flex;
+      gap: 30px;
+      margin-top: 30px;
+      align-items: center;
+    }
+
+    .profile-section img {
+      border-radius: 50%;
+      width: 140px;
+      height: 140px;
+      object-fit: cover;
+      border: 4px solid #ddd;
+    }
+
+    .profile-details {
+      flex: 1;
+    }
+
+    .profile-details p {
+      margin: 8px 0;
+      font-size: 1rem;
+    }
+
+    .profile-details span {
+      font-weight: 600;
+      color: #333;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">SwapHub</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="browse.html">Browse</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="auth.html">Logout</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h2>My Profile</h2>
+    <div class="profile-section">
+      <img id="profileImage" src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Profile Photo" />
+      <div class="profile-details">
+        <p><span>Name:</span> <span id="name"></span></p>
+        <p><span>Location:</span> <span id="location"></span></p>
+        <p><span>Skills Offered:</span> <span id="offered"></span></p>
+        <p><span>Skills Wanted:</span> <span id="wanted"></span></p>
+        <p><span>Availability:</span> <span id="availability"></span></p>
+        <p><span>Visibility:</span> <span id="visibility"></span></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Load profile data from localStorage
+    const profile = JSON.parse(localStorage.getItem('userProfile'));
+    if (profile) {
+      document.getElementById('name').textContent = profile.name || '-';
+      document.getElementById('location').textContent = profile.location || '-';
+      document.getElementById('offered').textContent = profile.skillsOffered || '-';
+      document.getElementById('wanted').textContent = profile.skillsWanted || '-';
+      document.getElementById('availability').textContent = profile.availability || '-';
+      document.getElementById('visibility').textContent = profile.visibility || '-';
+
+      if (profile.image) {
+        document.getElementById('profileImage').src = profile.image;
+      }
+    } else {
+      document.querySelector('.container').innerHTML = '<h2 style="text-align:center">No profile found. Please create one.</h2>';
+    }
+  </script>
+</body>
+</html>
