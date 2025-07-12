@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SwapHub | Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      background: linear-gradient(to bottom, #f3f4f6, #e0e7ff);
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #f0c9da;
+      padding: 1rem 2rem;
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      color: #5b21b6;
+    }
+
+    nav a {
+      margin-left: 1.5rem;
+      text-decoration: none;
+      color: #4f46e5;
+      font-weight: 600;
+    }
+
+    .dashboard-container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .dashboard-container h2 {
+      font-size: 2rem;
+      color: #4f46e5;
+      margin-bottom: 1.5rem;
+    }
+
+    .card-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 0 1rem;
+    }
+
+    .card {
+      background-color: #fff;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      padding: 1.5rem;
+      text-align: center;
+      transition: 0.3s ease;
+    }
+
+    .card img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin-bottom: 1rem;
+    }
+
+    .card h3 {
+      font-size: 1.2rem;
+      color: #4f46e5;
+      margin-bottom: 0.3rem;
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>SwapHub</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="browse.html">Browse</a>
+      <a href="auth.html">Login</a>
+      <a href="dashboard.html">My Dashboard</a>
+    </nav>
+  </header>
+
+  <div class="dashboard-container">
+    <h2>Your Swap Requests</h2>
+    <div id="dashboardCards" class="card-container"></div>
+  </div>
+
+ <script>
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+const users = [
+  { name: "Riya", skill: "UI Design", img: "riya.jpg" },
+  { name: "Aman", skill: "Backend", img: "aman.jpg" }
+];
+
+let sentRequests = JSON.parse(localStorage.getItem("sentRequests")) || [];
+
+function renderUsers() {
+  const container = document.getElementById("user-container");
+  container.innerHTML = "";
+
+  users.forEach(user => {
+    const card = document.createElement("div");
+    card.className = "user-card";
+
+    const img = document.createElement("img");
+    img.src = user.img;
+    img.className = "profile-pic";
+
+    const name = document.createElement("h3");
+    name.innerText = user.name;
+
+    const skill = document.createElement("p");
+    skill.innerText = Skill: ${user.skill};
+
+    const btn = document.createElement("button");
+    btn.className = "request-btn";
+
+    const alreadyRequested = sentRequests.some(u => u.name === user.name);
+
+    if (alreadyRequested) {
+      btn.innerText = "Requested ✅";
+      btn.disabled = true;
+      btn.style.backgroundColor = "#4CAF50";
+    } else {
+      btn.innerText = "Request Swap";
+      btn.onclick = () => {
+        if (!isLoggedIn) {
+          alert("Please login to send request.");
+          window.location.href = "auth.html";
+          return;
+        }
+        sentRequests.push(user);
+        localStorage.setItem("sentRequests", JSON.stringify(sentRequests));
+        renderUsers(); // refresh UI instantly
+      };
+    }
+
+    card.appendChild(img);
+    card.appendChild(name);
+    card.appendChild(skill);
+    card.appendChild(btn);
+    container.appendChild(card);
+  });
+}
+
+renderUsers(); // call on page load
+ </script>
+</body>
+</html>
